@@ -1,6 +1,7 @@
 package com.mukesh.headlines
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -17,12 +18,32 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    val listExisting = mutableListOf<String>("a","b","c","d")
+    val incomingList = mutableListOf<String>("a","b","x","y", "z")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val commonList = listExisting.intersect(incomingList)
+        Log.e("List", "Common lit ${commonList}")
+        val listToBeRemoved = listExisting.toMutableList()
+        listToBeRemoved.removeAll(commonList)
+        Log.e("List", "To be removed list ${listToBeRemoved}")
+
+        val listToAdded = incomingList.toMutableList()
+        listToAdded.removeAll(commonList)
+        Log.e("List", "To be added list ${listToAdded}")
+
+
+        Log.e("List", "listExisting ${listExisting}")
+
+        Log.e("List", "incomingList ${incomingList}")
+
         setContent {
             HeadlineApp()
         }
     }
+
+
 }
 
 

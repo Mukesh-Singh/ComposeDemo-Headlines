@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mukesh.module.data.api.Constants.Companion.COUNTRY_CODE_US
 import com.mukesh.module.domain.model.network.News
 import com.mukesh.module.domain.model.network.Source
 import com.mukesh.module.domain.usecase.HomeScreenUseCases
@@ -38,7 +39,7 @@ class HomeViewModel  @Inject constructor(
     val categoriesHeadlineState: State<Result<List<News>>> = _categoriesHeadlineState
 
     init {
-        queryMap["country"] = "in"
+        queryMap["country"] = COUNTRY_CODE_US
         getHeadlines()
         getSources()
         snapshotFlow {selectedCategoryState.value}
@@ -73,7 +74,7 @@ class HomeViewModel  @Inject constructor(
     private fun getCategorisedHeadline(categoryId: String) {
         val queryMap: HashMap<String, String> =  hashMapOf()
         queryMap["category"] = categoryId
-        queryMap["country"] = "in"
+        queryMap["country"] = COUNTRY_CODE_US
         _categoriesHeadlineState.value = Result.Loading()
         viewModelScope.launch {
             _categoriesHeadlineState.value =  homeScreenUseCases.getHeadLinesUseCase(queryMap)
